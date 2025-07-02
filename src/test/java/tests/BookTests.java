@@ -1,7 +1,6 @@
 package tests;
 
 import org.openqa.selenium.Cookie;
-import io.restassured.response.Response;
 import models.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -17,87 +16,38 @@ import static io.restassured.http.ContentType.JSON;
 import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static specifications.UserSpec.*;
+import static tests.TestData.*;
 
 public class BookTests extends TestBase {
 
     @Test
-    @DisplayName("Удаление книги из профиля")
-    @Tag("Позитивный")
-    void successfulUserCreationTest() {
+    void debugTest () {
 
-        UsersBodyModel bodyData = new UsersBodyModel();
-        bodyData.setName("neo");
-        bodyData.setJob("the chosen one");
+        ApiSteps apiStep = new ApiSteps();
 
-        UserCreationResponseModel response = step("Отправка запроса", ()->
-            given(basicUsersRequestSpec)
-                .body(bodyData)
+        apiStep.authorize();
+        apiStep.deleteAllBooks();
+        apiStep.addBook();
+        apiStep.deleteOneBook();
 
-                .when()
-                .post("/users")
-
-                .then()
-                .spec(usersSuccessfulCreationResponseSpec)
-                .extract().as(UserCreationResponseModel.class));
-
-        step("Проверка содержимого ответа", () -> {
-            assertThat(response.getName(), is(bodyData.getName()));
-            assertThat(response.getJob(), is(bodyData.getJob()));
-            assertThat(response.getId(), matchesRegex("\\d+"));
-            assertThat(response.getCreatedAt(), matchesRegex("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z"));
-        });
     }
 
     @Test
     void addBookToCollection_withDelete1Book_Test() {
 
-        String login = "oshkaStudy";
-        String password = "123oshkaStudy_!";
+        ApiSteps apiStep = new ApiSteps();
 
-        String authData = "{\"userName\":\"" + login + "\",\"password\":\"" + password + "\"}";
-
-        Response authResponse = given()
-                .log().uri()
-                .log().method()
-                .log().body()
-                .contentType(JSON)
-                .body(authData)
-                .when()
-                .post("/Account/v1/Login")
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(200)
-                .extract().response();
-
-        String isbn = "9781449365035";
-        String deleteBookData = format("{\"userId\":\"%s\",\"isbn\":\"%s\"}",
-                authResponse.path("userId") , isbn);
-
-        given()
-                .log().uri()
-                .log().method()
-                .log().body()
-                .contentType(JSON)
-                .header("Authorization", "Bearer " + authResponse.path("token"))
-                .body(deleteBookData)
-                .when()
-                .delete("/BookStore/v1/Book")
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(204);
+        apiStep.authorize();
 
         String bookData = format("{\"userId\":\"%s\",\"collectionOfIsbns\":[{\"isbn\":\"%s\"}]}",
-                authResponse.path("userId") , isbn);
+                USERID, ISBN);
 
         given()
                 .log().uri()
                 .log().method()
                 .log().body()
                 .contentType(JSON)
-                .header("Authorization", "Bearer " + authResponse.path("token"))
+                .header("Authorization", "Bearer " + TOKEN)
                 .body(bookData)
                 .when()
                 .post("/BookStore/v1/Books")
@@ -107,9 +57,9 @@ public class BookTests extends TestBase {
                 .statusCode(201);
 
         open("/favicon.ico");
-        getWebDriver().manage().addCookie(new Cookie("userID", authResponse.path("userId")));
-        getWebDriver().manage().addCookie(new Cookie("expires", authResponse.path("expires")));
-        getWebDriver().manage().addCookie(new Cookie("token", authResponse.path("token")));
+        getWebDriver().manage().addCookie(new Cookie("userID", USERID));
+        getWebDriver().manage().addCookie(new Cookie("expires", EXPIRES));
+        getWebDriver().manage().addCookie(new Cookie("token", TOKEN));
 
         open("/profile");
         $(".ReactTable").shouldHave(text("Speaking JavaScript"));
