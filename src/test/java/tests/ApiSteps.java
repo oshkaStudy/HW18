@@ -16,7 +16,7 @@ import static tests.TestData.*;
 public class ApiSteps extends TestBase {
 
     @Step("API. Авторизация и получение токена")
-    public void authorize() {
+    public ApiSteps authorize() {
 
         LoginBodyModel bodyData = new LoginBodyModel();
         bodyData.setUserName(LOGIN);
@@ -36,10 +36,12 @@ public class ApiSteps extends TestBase {
         TestData.TOKEN = response.getToken();
         TestData.USERID = response.getUserId();
         TestData.EXPIRES = response.getExpires();
+
+        return this;
     }
 
-    @Step("Удаление всех книг")
-    public void deleteAllBooks() {
+    @Step("API. Удаление всех книг")
+    public ApiSteps deleteAllBooks() {
 
         given(baseRequestSpec)
                 .queryParams("UserId", USERID)
@@ -51,10 +53,12 @@ public class ApiSteps extends TestBase {
                 .then()
                 .spec(responseSpecWithCode(204))
                 .extract().response();
+
+        return this;
     }
 
-    @Step("Добавление книги в профиль")
-    public void addBook() {
+    @Step("API. Добавление книги в профиль")
+    public ApiSteps addBook() {
 
         AddBooksBodyModel bodyData = new AddBooksBodyModel();
         bodyData.setUserId(USERID);
@@ -79,9 +83,11 @@ public class ApiSteps extends TestBase {
         assertThat(response.getBooks(), is(notNullValue()));
         assertThat(response.getBooks().size(), is(1));
         assertThat(response.getBooks().get(0).getIsbn(), is(ISBN));
+
+        return this;
     }
 
-    @Step("Удаление одной книги")
+    @Step("API. Удаление одной книги")
     public void deleteOneBook() {
 
         DeleteOneBookBodyModel bodyData = new DeleteOneBookBodyModel();

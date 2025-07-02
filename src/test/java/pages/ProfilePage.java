@@ -9,11 +9,7 @@ public class ProfilePage {
 
     public SelenideElement grid = $(".ReactTable");
 
-    public void checkGridForBook(String bookName) {
-        grid.shouldHave(text(bookName));
-    }
-
-    public void checkGridIsEmpty(String bookName) {
+    public void checkGridHasNotBook(String bookName) {
         grid.shouldNotHave(text(bookName));
     }
 
