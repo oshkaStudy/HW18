@@ -12,7 +12,8 @@ repositories {
 }
 
 def restAssuredVersion = "5.4.0",
-    allureVersion = "2.21.0"
+    allureVersion = "2.21.0",
+    selenideVersion = "7.9.2"
 
 allure {
     report {
@@ -30,6 +31,9 @@ allure {
 
 dependencies {
     testImplementation(
+            "com.codeborne:selenide:$selenideVersion",
+            "io.qameta.allure:allure-selenide:$allureVersion",
+            'com.github.javafaker:javafaker:1.0.2',
             "io.rest-assured:rest-assured:$restAssuredVersion",
             "io.rest-assured:json-schema-validator:$restAssuredVersion",
             "io.qameta.allure:allure-rest-assured:$allureVersion",
