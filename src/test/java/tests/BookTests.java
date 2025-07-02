@@ -1,5 +1,6 @@
 package tests;
 
+import helpers.WithLogin;
 import org.openqa.selenium.Cookie;
 import models.*;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +27,18 @@ public class BookTests extends TestBase {
         ApiSteps apiStep = new ApiSteps();
 
         apiStep.authorize();
+        apiStep.deleteAllBooks();
+        apiStep.addBook();
+        apiStep.deleteOneBook();
+
+    }
+
+    @Test
+    @WithLogin
+    void debugTestWi () {
+
+        ApiSteps apiStep = new ApiSteps();
+
         apiStep.deleteAllBooks();
         apiStep.addBook();
         apiStep.deleteOneBook();
