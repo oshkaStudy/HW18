@@ -3,7 +3,6 @@ package tests;
 import io.qameta.allure.Step;
 import models.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -16,7 +15,7 @@ import static tests.TestData.*;
 public class ApiSteps extends TestBase {
 
     @Step("API. Авторизация и получение токена")
-    public ApiSteps authorize() {
+    public void authorize() {
 
         LoginBodyModel bodyData = new LoginBodyModel(LOGIN,PASSWORD);
 
@@ -32,12 +31,10 @@ public class ApiSteps extends TestBase {
         TestData.TOKEN = response.getToken();
         TestData.USERID = response.getUserId();
         TestData.EXPIRES = response.getExpires();
-
-        return this;
     }
 
     @Step("API. Удаление всех книг")
-    public ApiSteps deleteAllBooks() {
+    public void deleteAllBooks() {
 
         given(baseRequestSpec)
                 .queryParams("UserId", USERID)
@@ -47,30 +44,28 @@ public class ApiSteps extends TestBase {
                 .then()
                 .spec(responseSpecWithCode(204))
                 .extract().response();
-
-        return this;
     }
 
     @Step("API. Добавление книги в профиль")
-    public ApiSteps addBook() {
+    public AddBooksResponseModel addBook() {
 
         AddBooksBodyModel bodyData = new AddBooksBodyModel(USERID, List.of(new IsbnModel(ISBN)));
 
-        AddBooksResponseModel response =
-                given(baseRequestSpec)
-                    .header("Authorization", "Bearer " + TOKEN)
-                    .body(bodyData)
-                    .when()
-                    .post(BOOKS_ENDPOINT)
-                    .then()
-                    .spec(responseSpecWithCode(201))
-                    .extract().as(AddBooksResponseModel.class);
+        return given(baseRequestSpec)
+              .header("Authorization", "Bearer " + TOKEN)
+              .body(bodyData)
+              .when()
+              .post(BOOKS_ENDPOINT)
+              .then()
+              .spec(responseSpecWithCode(201))
+              .extract().as(AddBooksResponseModel.class);
+    }
 
+    @Step("Проверка, что книга успешно добавлена")
+    public void assertBookAdded(AddBooksResponseModel response) {
         assertThat(response.getBooks(), is(notNullValue()));
         assertThat(response.getBooks().size(), is(1));
         assertThat(response.getBooks().get(0).getIsbn(), is(ISBN));
-
-        return this;
     }
 
     @Step("API. Удаление одной книги")

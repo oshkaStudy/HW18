@@ -1,6 +1,7 @@
 package tests;
 
 import helpers.WithLogin;
+import models.AddBooksResponseModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,16 +14,19 @@ public class BookTests extends TestBase {
         ApiSteps apiSteps = new ApiSteps();
         UISteps uiSteps = new UISteps();
 
-        apiSteps
-                .authorize()
-                .deleteAllBooks()
-                .addBook()
-                .deleteOneBook();
+        apiSteps.authorize();
+
+        apiSteps.deleteAllBooks();
+
+        AddBooksResponseModel addBookResponse = apiSteps.addBook();
+
+        apiSteps.assertBookAdded(addBookResponse);
+
+        apiSteps.deleteOneBook();
 
         uiSteps
                 .setTokenToSession()
                 .checkBookWasDeleted();
-
     }
 
     @Test
@@ -33,15 +37,17 @@ public class BookTests extends TestBase {
         ApiSteps apiSteps = new ApiSteps();
         UISteps uiSteps = new UISteps();
 
-        apiSteps
-                .deleteAllBooks()
-                .addBook()
-                .deleteOneBook();
+        apiSteps.deleteAllBooks();
+
+        AddBooksResponseModel addBookResponse = apiSteps.addBook();
+
+        apiSteps.assertBookAdded(addBookResponse);
+
+        apiSteps.deleteOneBook();
 
         uiSteps
                 .setTokenToSession()
                 .checkBookWasDeleted();
-
     }
 
 }
