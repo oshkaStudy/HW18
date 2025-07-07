@@ -3,8 +3,8 @@ package tests;
 public class TestData {
 
     public static String
-            LOGIN = "oshkaStudy1",
-            PASSWORD = "123oshkaStudy_!",
+            LOGIN = System.getProperty("demoqaLogin"),
+            PASSWORD = System.getProperty("demoqaPassword"),
             ISBN = "9781449365035",
             BOOK = "Speaking JavaScript",
             BOOK_ENDPOINT = "/BookStore/v1/Book",
