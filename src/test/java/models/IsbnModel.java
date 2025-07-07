@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class IsbnModel {
-    String Isbn;
+    String isbn;
 }
