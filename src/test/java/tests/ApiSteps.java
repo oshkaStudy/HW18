@@ -61,7 +61,7 @@ public class ApiSteps extends TestBase {
               .extract().as(AddBooksResponseModel.class);
     }
 
-    @Step("Проверка, что книга успешно добавлена")
+    @Step("API. Проверка, что книга успешно добавлена")
     public void assertBookAdded(AddBooksResponseModel response) {
         assertThat(response.getBooks(), is(notNullValue()));
         assertThat(response.getBooks().size(), is(1));
