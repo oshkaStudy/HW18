@@ -8,7 +8,7 @@ public class BookTests extends TestBase {
 
     @Test
     @DisplayName("Удаление добавленной книги")
-    void debugTest () {
+    void deleteBookTest () {
 
         ApiSteps apiSteps = new ApiSteps();
         UISteps uiSteps = new UISteps();
@@ -28,7 +28,7 @@ public class BookTests extends TestBase {
     @Test
     @DisplayName("Удаление добавленной книги с кастомной аннотацией")
     @WithLogin
-    void debugTestWi () {
+    void deleteBookWithAnnotationTest () {
 
         ApiSteps apiSteps = new ApiSteps();
         UISteps uiSteps = new UISteps();

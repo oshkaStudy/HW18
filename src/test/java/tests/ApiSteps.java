@@ -18,9 +18,7 @@ public class ApiSteps extends TestBase {
     @Step("API. Авторизация и получение токена")
     public ApiSteps authorize() {
 
-        LoginBodyModel bodyData = new LoginBodyModel();
-        bodyData.setUserName(LOGIN);
-        bodyData.setPassword(PASSWORD);
+        LoginBodyModel bodyData = new LoginBodyModel(LOGIN,PASSWORD);
 
         LoginResponseModel response =
                 given(baseRequestSpec)
@@ -56,13 +54,7 @@ public class ApiSteps extends TestBase {
     @Step("API. Добавление книги в профиль")
     public ApiSteps addBook() {
 
-        AddBooksBodyModel bodyData = new AddBooksBodyModel();
-        bodyData.setUserId(USERID);
-
-        IsbnModel isbnModel = new IsbnModel(ISBN);
-        List<IsbnModel> isbnList = new ArrayList<>();
-        isbnList.add(isbnModel);
-        bodyData.setCollectionOfIsbns(isbnList);
+        AddBooksBodyModel bodyData = new AddBooksBodyModel(USERID, List.of(new IsbnModel(ISBN)));
 
         AddBooksResponseModel response =
                 given(baseRequestSpec)
@@ -84,9 +76,7 @@ public class ApiSteps extends TestBase {
     @Step("API. Удаление одной книги")
     public void deleteOneBook() {
 
-        DeleteOneBookBodyModel bodyData = new DeleteOneBookBodyModel();
-        bodyData.setIsbn(ISBN);
-        bodyData.setUserId(USERID);
+        DeleteOneBookBodyModel bodyData = new DeleteOneBookBodyModel(ISBN,USERID);
 
         given(baseRequestSpec)
                 .body(bodyData)
