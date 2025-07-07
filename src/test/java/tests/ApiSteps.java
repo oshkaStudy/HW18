@@ -25,10 +25,8 @@ public class ApiSteps extends TestBase {
         LoginResponseModel response =
                 given(baseRequestSpec)
                         .body(bodyData)
-
                         .when()
                         .post(LOGIN_ENDPOINT)
-
                         .then()
                         .spec(responseSpecWithCode(200))
                         .extract().as(LoginResponseModel.class);
@@ -46,10 +44,8 @@ public class ApiSteps extends TestBase {
         given(baseRequestSpec)
                 .queryParams("UserId", USERID)
                 .header("Authorization", "Bearer " + TOKEN)
-
                 .when()
                 .delete(BOOKS_ENDPOINT)
-
                 .then()
                 .spec(responseSpecWithCode(204))
                 .extract().response();
@@ -72,10 +68,8 @@ public class ApiSteps extends TestBase {
                 given(baseRequestSpec)
                     .header("Authorization", "Bearer " + TOKEN)
                     .body(bodyData)
-
                     .when()
                     .post(BOOKS_ENDPOINT)
-
                     .then()
                     .spec(responseSpecWithCode(201))
                     .extract().as(AddBooksResponseModel.class);
@@ -97,10 +91,8 @@ public class ApiSteps extends TestBase {
         given(baseRequestSpec)
                 .body(bodyData)
                 .header("Authorization", "Bearer " + TOKEN)
-
                 .when()
                 .delete(BOOK_ENDPOINT)
-
                 .then()
                 .spec(responseSpecWithCode(204))
                 .extract().response();
