@@ -1,8 +1,9 @@
-package tests;
+package steps;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.Cookie;
 import pages.ProfilePage;
+import tests.TestBase;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;

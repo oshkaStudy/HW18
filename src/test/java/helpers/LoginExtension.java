@@ -2,7 +2,7 @@ package helpers;
 
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import tests.ApiSteps;
+import steps.ApiSteps;
 
 public class LoginExtension implements BeforeEachCallback {
 

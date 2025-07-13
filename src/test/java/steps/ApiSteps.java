@@ -1,7 +1,9 @@
-package tests;
+package steps;
 
 import io.qameta.allure.Step;
 import models.*;
+import tests.TestBase;
+import tests.TestData;
 
 import java.util.List;
 
