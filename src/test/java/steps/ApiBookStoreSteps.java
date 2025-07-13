@@ -2,8 +2,6 @@ package steps;
 
 import io.qameta.allure.Step;
 import models.*;
-import tests.TestBase;
-
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -13,7 +11,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static specifications.BasicSpec.*;
 import static tests.TestData.*;
 
-public class ApiBookStoreSteps extends TestBase {
+public class ApiBookStoreSteps {
 
     @Step("API. Удаление всех книг")
     public void deleteAllBooks() {

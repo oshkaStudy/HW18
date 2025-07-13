@@ -12,13 +12,13 @@ public class BookTests extends TestBase {
     @DisplayName("Удаление добавленной книги")
     void deleteBookTest () {
 
-        ApiAccountSteps apiAuthSteps = new ApiAccountSteps();
+        ApiAccountSteps apiAccountSteps = new ApiAccountSteps();
         ApiBookStoreSteps apiBooksSteps = new ApiBookStoreSteps();
         UiSteps uiSteps = new UiSteps();
 
-        apiAuthSteps.authorize();
+        apiAccountSteps.authorize();
 
-        apiAuthSteps.checkAndUpdateToken();
+        apiAccountSteps.checkAndUpdateToken();
 
         apiBooksSteps.deleteAllBooks();
 
