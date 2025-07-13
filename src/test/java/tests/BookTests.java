@@ -12,18 +12,21 @@ public class BookTests extends TestBase {
     @DisplayName("Удаление добавленной книги")
     void deleteBookTest () {
 
-        ApiSteps apiSteps = new ApiSteps();
-        UISteps uiSteps = new UISteps();
+        ApiAccountSteps apiAuthSteps = new ApiAccountSteps();
+        ApiBookStoreSteps apiBooksSteps = new ApiBookStoreSteps();
+        UiSteps uiSteps = new UiSteps();
 
-        apiSteps.authorize();
+        apiAuthSteps.authorize();
 
-        apiSteps.deleteAllBooks();
+        apiAuthSteps.checkAndUpdateToken();
 
-        AddBooksResponseModel addBookResponse = apiSteps.addBook();
+        apiBooksSteps.deleteAllBooks();
 
-        apiSteps.assertBookAdded(addBookResponse);
+        AddBooksResponseModel addBookResponse = apiBooksSteps.addBook();
 
-        apiSteps.deleteOneBook();
+        apiBooksSteps.assertBookAdded(addBookResponse);
+
+        apiBooksSteps.deleteOneBook();
 
         uiSteps
                 .setTokenToSession()
@@ -35,16 +38,16 @@ public class BookTests extends TestBase {
     @WithLogin
     void deleteBookWithAnnotationTest () {
 
-        ApiSteps apiSteps = new ApiSteps();
-        UISteps uiSteps = new UISteps();
+        ApiBookStoreSteps apiBooksSteps = new ApiBookStoreSteps();
+        UiSteps uiSteps = new UiSteps();
 
-        apiSteps.deleteAllBooks();
+        apiBooksSteps.deleteAllBooks();
 
-        AddBooksResponseModel addBookResponse = apiSteps.addBook();
+        AddBooksResponseModel addBookResponse = apiBooksSteps.addBook();
 
-        apiSteps.assertBookAdded(addBookResponse);
+        apiBooksSteps.assertBookAdded(addBookResponse);
 
-        apiSteps.deleteOneBook();
+        apiBooksSteps.deleteOneBook();
 
         uiSteps
                 .setTokenToSession()

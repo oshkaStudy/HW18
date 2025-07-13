@@ -2,14 +2,16 @@ package helpers;
 
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import steps.ApiSteps;
+import steps.ApiAccountSteps;
+import steps.ApiBookStoreSteps;
 
 public class LoginExtension implements BeforeEachCallback {
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        ApiSteps apiStep = new ApiSteps();
+        ApiAccountSteps apiStep = new ApiAccountSteps();
         apiStep.authorize();
+        apiStep.checkAndUpdateToken();
     }
 }
 

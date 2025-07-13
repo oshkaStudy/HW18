@@ -3,7 +3,6 @@ package steps;
 import io.qameta.allure.Step;
 import models.*;
 import tests.TestBase;
-import tests.TestData;
 
 import java.util.List;
 
@@ -14,26 +13,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static specifications.BasicSpec.*;
 import static tests.TestData.*;
 
-public class ApiSteps extends TestBase {
-
-    @Step("API. Авторизация и получение токена")
-    public void authorize() {
-
-        LoginBodyModel bodyData = new LoginBodyModel(LOGIN,PASSWORD);
-
-        LoginResponseModel response =
-                given(baseRequestSpec)
-                        .body(bodyData)
-                        .when()
-                        .post(LOGIN_ENDPOINT)
-                        .then()
-                        .spec(responseSpecWithCode(200))
-                        .extract().as(LoginResponseModel.class);
-
-        TestData.TOKEN = response.getToken();
-        TestData.USERID = response.getUserId();
-        TestData.EXPIRES = response.getExpires();
-    }
+public class ApiBookStoreSteps extends TestBase {
 
     @Step("API. Удаление всех книг")
     public void deleteAllBooks() {

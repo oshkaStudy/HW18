@@ -10,10 +10,10 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static tests.TestData.*;
 import static tests.TestData.TOKEN;
 
-public class UISteps extends TestBase {
+public class UiSteps extends TestBase {
 
     @Step("UI. Добавление токена к сессии")
-    public UISteps setTokenToSession() {
+    public UiSteps setTokenToSession() {
         open("/favicon.ico");
         getWebDriver().manage().addCookie(new Cookie("userID", USERID));
         getWebDriver().manage().addCookie(new Cookie("expires", EXPIRES));
